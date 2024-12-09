@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Cashback</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        html { 
+            scroll-behavior: smooth; 
+        }
+        body {
+            background: linear-gradient(135deg, #f6f8f9 0%, #e5ebee 100%);
+        }
+        .audio-wave {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .audio-wave div {
+            width: 4px;
+            height: 20px;
+            background-color: #4A90E2;
+            border-radius: 2px;
+            animation: wave 1s infinite alternate;
+        }
+        .audio-wave div:nth-child(2) { animation-delay: 0.1s; }
+        .audio-wave div:nth-child(3) { animation-delay: 0.2s; }
+        .audio-wave div:nth-child(4) { animation-delay: 0.3s; }
+        .audio-wave div:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes wave {
+            0% { height: 10px; }
+            100% { height: 30px; }
+        }
+        #floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            background-color: rgba(74, 144, 226, 0.1);
+            border-radius: 50%;
+            transition: transform 0.5s ease;
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+            transform: scale(0.95);
+        }
+
+        .feature-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="font-sans leading-normal tracking-normal">
+    <!-- Floating Elements -->
+    <div id="floating-elements"></div>
+
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-blue-600 mb-4 animate-pulse">Bitcoin Cashback</h1>
+            
+            <!-- Voice Message Section -->
+            <div class="bg-white shadow-lg rounded-xl p-6 max-w-2xl mx-auto mb-8 transform transition duration-300 hover:scale-105">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <img src="assets/depositphotos_121730402-stock-illustration-headset-icon-flat-design.jpg" alt="Speaker" class="w-16 h-16 rounded-full shadow-md">
+                        <div>
+                            <h3 class="font-semibold text-xl text-gray-800">Úvodná hlasová správa</h3>
+                            <div class="audio-wave flex mt-2">
+                                <div></div><div></div><div></div><div></div><div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="playAudio" class="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition transform hover:scale-110">
+                        Prehrať
+                    </button>
+                </div>
+                <audio id="introAudio" class="hidden">
+                    <source src="assets/Hlasovka.mp3" type="audio/mpeg">
+                    <source src="assets/Hlasovka.ogg" type="audio/ogg">
+                    Váš prehliadač nepodporuje audio element.
+                </audio>
+            </div>
+        </header>
+
+        <main class="container mx-auto px-4 py-8">
+            <h2 class="text-3xl font-bold text-center mb-10 text-blue-600">Výhody Wexo aplikácie</h2>
+
+            <!-- Features Section with Enhanced Animations -->
+            <section class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-white p-6 rounded-xl shadow-lg opacity-0 translate-y-10 hover:shadow-2xl">
+                    <img src="https://wexopay.com/images/wallet/wallet-tab1.svg" alt="Send Crypto" class="w-20 h-20 mb-4 mx-auto">
+                    <h2 class="text-xl font-semibold mb-2 text-center text-blue-700">Posielanie, prijímanie a platenie kryptomenami</h2>
+                    <p class="text-center text-gray-600">Plať jednoducho a rýchlo. Prijímaj, posielaj a plať kryptomenami bezpečne s Wexo aplikáciou na kryptomeny.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card bg-white p-6 rounded-xl shadow-lg opacity-0 translate-y-10 hover:shadow-2xl">
+                    <img src="https://wexopay.com/images/wallet/wallet-tab2.png" alt="Phone Transfer" class="w-20 h-20 mb-4 mx-auto">
+                    <h2 class="text-xl font-semibold mb-2 text-center text-blue-700">Posielanie kryptomien prostredníctvom telefónneho čísla
+                    </h2>
+                    <p class="text-center text-gray-600">V aplikácii Wexo môžeš kryptomeny posielať bez toho, aby si poznal adresu peňaženky príjemcu - iba prostredníctvom telefónneho čísla.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card bg-white p-6 rounded-xl shadow-lg opacity-0 translate-y-10 hover:shadow-2xl">
+                    <img src="https://wexopay.com/images/wallet/wallet-tab3.svg" alt="Exchange" class="w-20 h-20 mb-4 mx-auto">
+                    <h2 class="text-xl font-semibold mb-2 text-center text-blue-700">Zmenáreň a obchodovanie</h2>
+                    <p class="text-center text-gray-600">Obchoduj s kryptomenami a zamieňaj ich medzi sebou rýchlo a jednoducho. Vyskúšaj si obchodovanie vo Wexo aplikácii.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card bg-white p-6 rounded-xl shadow-lg opacity-0 translate-y-10 hover:shadow-2xl">
+                    <img src="https://wexopay.com/images/wallet/wallet-tab4.svg" alt="Analytics" class="w-20 h-20 mb-4 mx-auto">
+                    <h2 class="text-xl font-semibold mb-2 text-center text-blue-700">Grafy a kurzy kryptomien</h2>
+                    <p class="text-center text-gray-600">Wexo ti prináša grafy a prehľad vývoju kryptomenového trhu a ceny kryptomien za zvolené obdobie.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card bg-white p-6 rounded-xl shadow-lg opacity-0 translate-y-10 hover:shadow-2xl">
+                    <img src="https://wexopay.com/images/wallet/wallet-tab5.png" alt="Card Purchase" class="w-20 h-20 mb-4 mx-auto">
+                    <h2 class="text-xl font-semibold mb-2 text-center text-blue-700">Nákup kartou</h2>
+                    <p class="text-center text-gray-600">Kúpte si kryptomeny kartou alebo pomocou Apple Pay alebo Google Pay bezpečne a jednoducho. Aplikácia WEXO poskytuje rýchly a jednoduchý spôsob nákupu kryptomien.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card bg-white p-6 rounded-xl shadow-lg opacity-0 translate-y-10 hover:shadow-2xl">
+                    <img src="https://wexopay.com/images/wallet/wallet-tab6.svg" alt="Recurring Payment" class="w-20 h-20 mb-4 mx-auto">
+                    <h2 class="text-xl font-semibold mb-2 text-center text-blue-700">Trvalé príkazy kryptomien</h2>
+                    <p class="text-center text-gray-600">Môžete si nastaviť trvalé príkazy v kryptomenách, a to aj do viacerých peňaženiek naraz, a poslať zadanú sumu v kryptomenách alebo fiat mene.</p>
+                </div>
+            </section>
+
+            <!-- Videos Section with Improved Layout -->
+            <section class="mb-12 mt-16">
+                <h2 class="text-3xl font-bold text-center mb-10 text-blue-800">Naše videá</h2>
+                
+                <div class="grid md:grid-cols-2 gap-10">
+                    <!-- Prvé video -->
+                    <div class="video-container opacity-0 transform -translate-y-10">
+                        <div class="bg-white rounded-xl overflow-hidden shadow-2xl transform transition duration-300 hover:scale-105">
+                            <div class="aspect-w-16 aspect-h-9">
+                                <video controls class="w-full h-full object-cover">
+                                    <source src="assets/Cashback.mp4" type="video/mp4">
+                                    <source src="assets/Cashback.webm" type="video/webm">
+                                    Váš prehliadač nepodporuje video element.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Druhé video -->
+                    <div class="video-container opacity-0 transform -translate-y-10">
+                        <div class="bg-white rounded-xl overflow-hidden shadow-2xl transform transition duration-300 hover:scale-105">
+                            <div class="aspect-w-16 aspect-h-9">
+                                <video controls class="w-full h-full object-cover">
+                                    <source src="assets/Loyalty Program .mp4" type="video/mp4">
+                                    <source src="assets/Loyalty Program .mp4" type="video/webm">
+                                    Váš prehliadač nepodporuje video element.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Tretie video -->
+                    <div class="video-container opacity-0 transform -translate-y-10">
+                        <div class="bg-white rounded-xl overflow-hidden shadow-2xl transform transition duration-300 hover:scale-105">
+                            <div class="aspect-w-16 aspect-h-9">
+                                <video controls class="w-full h-full object-cover">
+                                    <source src="assets/Rytmus.mp4" type="video/mp4">
+                                    <source src="assets/Rytmus.webm" type="video/webm">
+                                    Váš prehliadač nepodporuje video element.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                    
+                
+                    
+                </div>
+                <section class="bg-blue-600 text-white text-center py-8 mt-12">
+                    <h2 class="text-2xl font-semibold mb-4 opacity-0 translate-y-10">
+                        Máte záujem o viac informácií?
+                    </h2>
+                    <a href="https://wexopay.com/sk" 
+                       class="bg-white text-blue-600 font-bold px-6 py-3 rounded-full hover:bg-gray-200 transition-opacity duration-300 opacity-0 translate-y-10 inline-block mb-6" 
+                       target="_blank">
+                        Viac na WexoPay.com
+                    </a>
+                    <p class="text-lg mb-6 opacity-0 translate-y-10"></p>
+                    </p>
+                    <a href="https://www.youtube.com/@WexoPay/videos" 
+                       class="bg-white text-blue-600 font-bold px-6 py-3 rounded-full hover:bg-gray-200 transition-opacity duration-300 opacity-0 translate-y-10 inline-block mb-6" 
+                       target="_blank">
+                        YouTube/WexoPay
+                    </a>
+                </section>
+            
+        </main>
+    </div>
+
+    <script>
+        // Animácie pre sekciu s odkazmi
+        gsap.utils.toArray("section a, section h2, section p").forEach((element, i) => {
+                    gsap.to(element, {
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 90%",
+                            
+                        },
+                        opacity: 2,
+                        y: 0,
+                        duration: 0.2,
+                        delay: i * 0.0
+                    });
+                });
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            const audioPlayer = document.getElementById('playAudio');
+            const audio = document.getElementById('introAudio');
+            
+            audioPlayer.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play();
+                    audioPlayer.textContent = 'Zastaviť';
+                    audioPlayer.classList.add('bg-red-500');
+                } else {
+                    audio.pause();
+                    audioPlayer.textContent = 'Prehrať';
+                    audioPlayer.classList.remove('bg-red-500');
+                }
+            });
+
+            gsap.utils.toArray(".feature-card").forEach((card, i) => {
+                gsap.to(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top bottom-=100",
+                        toggleActions: "play none none reverse"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 0.8,
+                    delay: i * 0.2,
+                    ease: "back.out(1.7)"
+                });
+            });
+
+            gsap.utils.toArray('.video-container').forEach(video => {
+                gsap.to(video, {
+                    scrollTrigger: {
+                        trigger: video,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power2.out"
+                });
+            });
+
+            function createFloatingElements() {
+                const container = document.getElementById('floating-elements');
+                const colors = ['#4A90E2', '#3B82F6', '#2563EB', '#1D4ED8'];
+
+                for (let i = 0; i < 30; i++) {
+                    const element = document.createElement('div');
+                    element.className = 'floating-element';
+                    
+                    const size = Math.random() * 80 + 20;
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    element.style.left = `${Math.random() * 100}%`;
+                    element.style.top = `${Math.random() * 100}%`;
+                    element.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)] + '20';
+                    
+                    container.appendChild(element);
+
+                    gsap.to(element, {
+                        x: gsap.utils.random(-100, 100),
+                        y: gsap.utils.random(-100, 100),
+                        duration: gsap.utils.random(10, 20),
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                }
+            }
+
+            createFloatingElements();
+        });
+    </script>
+</body>
+</html>
